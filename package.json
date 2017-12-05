@@ -1,0 +1,33 @@
+{
+  "name": "scaffolding",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./server/index.js --exec babel-node --presets es2015",
+    "run": "node ./server/index.js",
+    "build": "rollup -c ./client/rollup.config.js",
+    "dev": "rollup -c ./client/rollup.config.js -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lpolaright/card-mechanicle.git"
+  },
+  "author": "Daniel Demidov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lpolaright/card-mechanicle/issues"
+  },
+  "homepage": "https://github.com/lpolaright/card-mechanicle#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-latest": "^6.24.1",
+    "express": "^4.16.2",
+    "nodemon": "^1.12.5",
+    "rollup": "^0.51.8",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-watch": "^4.3.1"
+  }
+}
