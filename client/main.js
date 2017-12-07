@@ -27,12 +27,13 @@ const initMap = () => {
     center: { lat: -34.397, lng: 150.644 },
     zoom: 8
   });
+  findTransportsListener(
+    document.getElementById('find_transports'), 
+    document.getElementById('address'),
+    map
+  );
 }
 
 window.initMap = initMap;
 
 createGmapsScript();
-findTransportsListener(
-  document.getElementById('find_transports'), 
-  document.getElementById('address')
-);
