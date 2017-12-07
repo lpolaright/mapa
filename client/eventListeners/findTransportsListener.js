@@ -1,6 +1,9 @@
 import fetchApiKey from '../fetchers/fetchApiKey';
 import { castObject } from '../casts/castObject';
 import axios from 'axios';
+import * as R from 'ramda';
+
+const locationLens = R.lensPath(['data', 'results', 0, 'geometry', 'location']);
 
 const findTransportsListener = (findTransportElement, addressElement) => {
   findTransportElement.addEventListener('click', (event) => {
@@ -14,7 +17,7 @@ const findTransportsListener = (findTransportElement, addressElement) => {
     const geoLocationUrlParams = castObject(geoLocationParams).toUrlParams();
     const apiCallPath = [geoLocationApiPath, '?', geoLocationUrlParams].join('');
     axios.get(apiCallPath).then(response => {
-      console.log(response);
+      const location = R.view(locationLens, response);
     });
   });
 }
