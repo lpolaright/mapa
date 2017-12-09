@@ -1,7 +1,10 @@
 import express from 'express';
+import path from 'path';
 
 const app = express();
 
-app.get('/', (req, res) => res.send('Hello World! Nice! whoa!'));
+app.use(express.static('public'));
+
+app.get('/', (req, res) => res.sendFile(path.resolve('public/index.html')));
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'));
