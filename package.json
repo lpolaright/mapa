@@ -34,6 +34,8 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "gtfs": "^1.3.2",
+    "mongoose": "^4.13.6",
     "ramda": "^0.25.0"
   }
 }
