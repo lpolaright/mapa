@@ -28,14 +28,25 @@ app.get('/import', (req, res) => {
   res.send('Import request was submitted successfully!');
 });
 
+const getRoutesForStops = res => stops => {
+  const routesPromises = stops.map(stop => 
+    gtfs.getRoutes({ stop_id: stop.stop_id }, { _id: 1, route_id: 1, stop_id: 1 }) 
+  );
+  Promise.all(routesPromises)
+    .then(routes => {
+      res.status(200).json(routes);
+    })
+    .catch(err => {
+      res.status(200).json(err);
+    })
+}
+
 app.post('/ideal-zones', (req, res) => {
-  const locA = R.view(R.lensPath(['locations', 0]))(req.body);  
+  const locA = R.view(R.lensPath(['locations', 0]))(req.body);
   const locB = R.view(R.lensPath(['locations', 1]))(req.body);
   console.log(locB);
-  gtfs.getStops({ within: locA })
-    .then(stops => {
-      res.status(200).json(stops);
-    })
+  gtfs.getStops({ within: locA }, { _id: 1, stop_id: 1, loc: 1 })
+    .then(getRoutesForStops(res))
     .catch(err => {
       res.status(200).json(err);
     });
