@@ -30,11 +30,28 @@ app.get('/import', (req, res) => {
 
 const getRoutesForStops = res => stops => {
   const routesPromises = stops.map(stop => 
-    gtfs.getRoutes({ stop_id: stop.stop_id }, { _id: 1, route_id: 1, stop_id: 1 }) 
+    gtfs.getRoutes({ stop_id: stop.stop_id }) 
   );
   Promise.all(routesPromises)
-    .then(routes => {
-      res.status(200).json(routes);
+    .then(stopRoutes => {
+      // res.status(200).json(stopRoutes);
+      const stopsPromises = stopRoutes.map(routes => 
+        routes.map(route => 
+          gtfs.getStops({ 
+            agency_key: 'israeli-transport',
+            route_id: route.route_id,
+            direction_id: 0
+          })
+        )
+      );
+      const promisesArray = R.flatten(stopsPromises);
+      Promise.all(promisesArray)
+        .then(stops_two => {
+          res.status(200).json(stops_two);
+        })
+        .catch(err => {
+          res.status(200).json(err);
+        });
     })
     .catch(err => {
       res.status(200).json(err);
